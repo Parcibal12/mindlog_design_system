@@ -7,6 +7,7 @@ class MindLogTextField extends StatelessWidget {
   final IconData? prefixIcon;
   final int? maxLines;
   final bool autofocus;
+  final ValueChanged<String>? onChanged;
 
   const MindLogTextField({
     super.key,
@@ -15,6 +16,7 @@ class MindLogTextField extends StatelessWidget {
     this.prefixIcon,
     this.maxLines = 1,
     this.autofocus = false,
+    this.onChanged,
   });
 
   @override
@@ -27,6 +29,7 @@ class MindLogTextField extends StatelessWidget {
         boxShadow: const [BoxShadow(color: Color(0x0C000000), offset: Offset(0, 1), blurRadius: 1)],
       ),
       child: TextField(
+        onChanged: onChanged,
         controller: controller,
         maxLines: maxLines,
         autofocus: autofocus,
