@@ -15,7 +15,7 @@ class MindLogNumPad extends StatelessWidget {
     this.showBiometrics = true,
   });
 
-  Widget _buildKey(Widget child, VoidCallback onTap) {
+  Widget _buildKey(Widget child, VoidCallback onTap, bool isDark) {
     return Expanded(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -25,7 +25,7 @@ class MindLogNumPad extends StatelessWidget {
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), offset: const Offset(0, 2), blurRadius: 4)],
         ),
         child: Material(
-          color: AppColors.backgroundWhite,
+          color: isDark ? AppColors.darkSurface : AppColors.backgroundWhite,
           borderRadius: BorderRadius.circular(20),
           child: InkWell(
             onTap: onTap,
@@ -33,7 +33,7 @@ class MindLogNumPad extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppColors.surfaceKeyboard),
+                border: Border.all(color: isDark ? AppColors.darkIndicatorInactive : AppColors.surfaceKeyboard),
               ),
               alignment: Alignment.center,
               child: child,
@@ -44,48 +44,54 @@ class MindLogNumPad extends StatelessWidget {
     );
   }
 
-  Widget _buildRow(List<String> digits) {
+  Widget _buildRow(List<String> digits, bool isDark) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: digits.map((d) => _buildKey(
-        Text(d, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: AppColors.textNumber)),
+        Text(d, style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextHeader : AppColors.textNumber)),
         () => onDigitTap(d),
+        isDark
       )).toList(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(32, 24, 32, 32),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceKeyboard,
-        border: Border(top: BorderSide(color: AppColors.borderLight, width: 0.8)),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkBackground : AppColors.surfaceKeyboard,
+        border: Border(top: BorderSide(color: isDark ? AppColors.darkIndicatorInactive : AppColors.borderLight, width: 0.8)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildRow(['1', '2', '3']),
+          _buildRow(['1', '2', '3'], isDark),
           const SizedBox(height: 8),
-          _buildRow(['4', '5', '6']),
+          _buildRow(['4', '5', '6'], isDark),
           const SizedBox(height: 8),
-          _buildRow(['7', '8', '9']),
+          _buildRow(['7', '8', '9'], isDark),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildKey(
-                showBiometrics ? const Icon(Icons.fingerprint, color: AppColors.primaryDark, size: 32) : const SizedBox.shrink(),
+                showBiometrics ? Icon(Icons.fingerprint, color: isDark ? AppColors.secondaryGreen : AppColors.primaryDark, size: 32) : const SizedBox.shrink(),
                 showBiometrics ? onBiometricTap : () {},
+                isDark
               ),
               _buildKey(
-                const Text('0', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: AppColors.textNumber)),
+                Text('0', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextHeader : AppColors.textNumber)),
                 () => onDigitTap('0'),
+                isDark
               ),
               _buildKey(
-                const Icon(Icons.backspace_outlined, color: AppColors.textSubtitle, size: 24),
+                Icon(Icons.backspace_outlined, color: isDark ? AppColors.darkTextSubtitle : AppColors.textSubtitle, size: 24),
                 onBackspaceTap,
+                isDark
               ),
             ],
           ),
