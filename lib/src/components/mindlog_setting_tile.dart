@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 class MindLogSettingTile extends StatelessWidget {
   final IconData icon;
@@ -18,9 +19,16 @@ class MindLogSettingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
-        if (showTopDivider) const Divider(color: Color(0xFFF8FAFC), height: 1, thickness: 1),
+        if (showTopDivider) 
+          Divider(
+            color: isDark ? AppColors.darkIndicatorInactive : const Color(0xFFF8FAFC), 
+            height: 1, 
+            thickness: 1
+          ),
         InkWell(
           onTap: onTap,
           child: Padding(
@@ -29,14 +37,25 @@ class MindLogSettingTile extends StatelessWidget {
               children: [
                 Container(
                   width: 32, height: 32,
-                  decoration: const BoxDecoration(color: Color(0xFFF8FAFC), shape: BoxShape.circle),
-                  child: Icon(icon, color: const Color(0xFF64748B), size: 16),
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.darkBackground : const Color(0xFFF8FAFC), 
+                    shape: BoxShape.circle
+                  ),
+                  child: Icon(
+                    icon, 
+                    color: isDark ? AppColors.darkTextSubtitle : const Color(0xFF64748B), 
+                    size: 16
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     title, 
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF334155))
+                    style: TextStyle(
+                      fontSize: 14, 
+                      fontWeight: FontWeight.w600, 
+                      color: isDark ? AppColors.darkTextHeader : const Color(0xFF334155)
+                    )
                   ),
                 ),
                 trailing,
