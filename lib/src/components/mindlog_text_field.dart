@@ -21,11 +21,13 @@ class MindLogTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.darkSurface : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: isDark ? AppColors.darkIndicatorInactive : AppColors.borderLight),
         boxShadow: const [BoxShadow(color: Color(0x0C000000), offset: Offset(0, 1), blurRadius: 1)],
       ),
       child: TextField(
@@ -33,11 +35,11 @@ class MindLogTextField extends StatelessWidget {
         controller: controller,
         maxLines: maxLines,
         autofocus: autofocus,
-        style: const TextStyle(fontSize: 14, color: Color(0xFF475569)),
+        style: TextStyle(fontSize: 14, color: isDark ? AppColors.darkTextHeader : const Color(0xFF475569)),
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(color: AppColors.textSubtitle, fontSize: 14),
-          prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.textSubtitle, size: 20) : null,
+          hintStyle: TextStyle(color: isDark ? AppColors.darkTextSubtitle : AppColors.textSubtitle, fontSize: 14),
+          prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isDark ? AppColors.darkTextSubtitle : AppColors.textSubtitle, size: 20) : null,
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         ),
