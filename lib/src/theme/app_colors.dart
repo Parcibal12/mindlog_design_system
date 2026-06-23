@@ -39,4 +39,5 @@ class AppColors {
   static const Color darkTextSubtitle = Color(0xFF94A3B8); 
   static const Color darkAvatarBackground = Color(0xFF134E4A);
   static const Color darkStreakBackground = Color(0xFF431407);
+  static const Color darkIndicatorInactive = Color(0xFF334155);
 }
